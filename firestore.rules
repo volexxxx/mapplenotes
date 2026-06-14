@@ -1,0 +1,64 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerified() {
+      // return request.auth.token.email_verified == true; // Google sign in in simple apps might not have verified email on early iterations but let's assume it or ignore for this simple note app. We'll skip email_verified = true to ensure smooth UX unless requested.
+      return true; // We use simple auth
+    }
+
+    function incoming() { return request.resource.data; }
+    function existing() { return resource.data; }
+
+    function isValidId(id) { 
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); 
+    }
+
+    function isValidNote(data) {
+      return data.keys().hasAll(['content', 'date', 'isPinned', 'isDeleted', 'ownerId']) &&
+             data.content is string && data.content.size() <= 500000 &&
+             data.date is number &&
+             data.isPinned is bool &&
+             data.isDeleted is bool &&
+             data.ownerId == request.auth.uid &&
+             (data.keys().hasAll(['folderId']) ? (data.folderId is string && data.folderId.size() <= 128) : true);
+    }
+
+    function isValidFolder(data) {
+      return data.keys().hasAll(['name', 'ownerId']) &&
+             data.name is string && data.name.size() <= 128 &&
+             data.ownerId == request.auth.uid;
+    }
+
+    match /sync_spaces/{syncKey} {
+      allow read, write: if true;
+    }
+
+    match /notes/{noteId} {
+      allow get: if isSignedIn() && existing().ownerId == request.auth.uid;
+      allow create: if isSignedIn() && isValidId(noteId) && isValidNote(incoming());
+      allow update: if isSignedIn() && isValidId(noteId) && existing().ownerId == request.auth.uid && isValidNote(incoming()) && incoming().ownerId == existing().ownerId;
+      allow delete: if isSignedIn() && existing().ownerId == request.auth.uid;
+      
+      // Specifically for list operations
+      allow list: if isSignedIn() && resource.data.ownerId == request.auth.uid;
+    }
+
+    match /folders/{folderId} {
+      allow get: if isSignedIn() && existing().ownerId == request.auth.uid;
+      allow create: if isSignedIn() && isValidId(folderId) && isValidFolder(incoming());
+      allow update: if isSignedIn() && isValidId(folderId) && existing().ownerId == request.auth.uid && isValidFolder(incoming()) && incoming().ownerId == existing().ownerId;
+      allow delete: if isSignedIn() && existing().ownerId == request.auth.uid;
+
+      allow list: if isSignedIn() && resource.data.ownerId == request.auth.uid;
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "Note Taker",
+  "description": "A simple note-taking application.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

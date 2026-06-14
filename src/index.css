@@ -1,0 +1,107 @@
+@import "tailwindcss";
+@variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --color-accent: var(--app-accent);
+}
+
+@layer base {
+  :root {
+    --app-accent: #EEB111;
+  }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "SF Pro Display", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    overflow-x: hidden;
+  }
+  
+  ::-webkit-scrollbar {
+    width: 0px;
+    background: transparent;
+    display: none;
+  }
+  * {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+  
+  html {
+    overflow-x: hidden;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+}
+
+/* Remove custom highlight-* classes, we'll use attribute selectors! */
+
+.theme-dark .editor-canvas span[style*="background-color: rgb(252, 231, 243)"],
+.theme-dark .editor-canvas span[style*="background-color: #fce7f3"] {
+    background-color: #4C0519 !important;
+    color: #F472B6 !important;
+}
+
+.editor-canvas span[style*="background-color: rgb(252, 231, 243)"],
+.editor-canvas span[style*="background-color: #fce7f3"] {
+    padding: 2px 4px; border-radius: 4px; font-weight: 500;
+    color: #BE185D !important;
+}
+
+.theme-dark .editor-canvas span[style*="background-color: rgb(204, 251, 241)"],
+.theme-dark .editor-canvas span[style*="background-color: #ccfbf1"] {
+    background-color: #042F2E !important;
+    color: #2DD4BF !important;
+}
+.editor-canvas span[style*="background-color: rgb(204, 251, 241)"],
+.editor-canvas span[style*="background-color: #ccfbf1"] {
+    padding: 2px 4px; border-radius: 4px; font-weight: 500;
+    color: #0F766E !important;
+}
+
+.theme-dark .editor-canvas span[style*="background-color: rgb(219, 234, 254)"],
+.theme-dark .editor-canvas span[style*="background-color: #dbeafe"] {
+    background-color: #172554 !important;
+    color: #60A5FA !important;
+}
+.editor-canvas span[style*="background-color: rgb(219, 234, 254)"],
+.editor-canvas span[style*="background-color: #dbeafe"] {
+    padding: 2px 4px; border-radius: 4px; font-weight: 500;
+    color: #1D4ED8 !important;
+}
+
+.theme-dark .editor-canvas span[style*="background-color: rgb(255, 237, 213)"],
+.theme-dark .editor-canvas span[style*="background-color: #ffedd5"] {
+    background-color: #431407 !important;
+    color: #FB923C !important;
+}
+.editor-canvas span[style*="background-color: rgb(255, 237, 213)"],
+.editor-canvas span[style*="background-color: #ffedd5"] {
+    padding: 2px 4px; border-radius: 4px; font-weight: 500;
+    color: #C2410C !important;
+}
+
+.theme-dark .editor-canvas span[style*="background-color: rgb(243, 232, 255)"],
+.theme-dark .editor-canvas span[style*="background-color: #f3e8ff"] {
+    background-color: #3B0764 !important;
+    color: #C084FC !important;
+}
+.editor-canvas span[style*="background-color: rgb(243, 232, 255)"],
+.editor-canvas span[style*="background-color: #f3e8ff"] {
+    padding: 2px 4px; border-radius: 4px; font-weight: 500;
+    color: #7E22CE !important;
+}
+
+.bg-btn-pink { background-color: #FCE7F3; }
+.theme-dark .bg-btn-pink { background-color: #4C0519; }
+
+.bg-btn-teal { background-color: #CCFBF1; }
+.theme-dark .bg-btn-teal { background-color: #042F2E; }
+
+.bg-btn-blue { background-color: #DBEAFE; }
+.theme-dark .bg-btn-blue { background-color: #172554; }
+
+.bg-btn-orange { background-color: #FFEDD5; }
+.theme-dark .bg-btn-orange { background-color: #431407; }
+
+.bg-btn-purple { background-color: #F3E8FF; }
+.theme-dark .bg-btn-purple { background-color: #3B0764; }

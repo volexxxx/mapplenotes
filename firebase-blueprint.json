@@ -1,0 +1,66 @@
+{
+  "entities": {
+    "Note": {
+      "title": "Note",
+      "description": "A single note document.",
+      "type": "object",
+      "properties": {
+        "content": {
+          "type": "string",
+          "description": "HTML content of the note"
+        },
+        "date": {
+          "type": "number",
+          "description": "Timestamp of the note creation or last update"
+        },
+        "isPinned": {
+          "type": "boolean",
+          "description": "Whether the note is pinned"
+        },
+        "isDeleted": {
+          "type": "boolean",
+          "description": "Whether the note is marked for deletion"
+        },
+        "folderId": {
+          "type": "string",
+          "description": "Optional folder ID this note belongs to"
+        },
+        "ownerId": {
+          "type": "string",
+          "description": "The user ID of the note owner"
+        }
+      },
+      "required": ["content", "date", "isPinned", "isDeleted", "ownerId"]
+    },
+    "Folder": {
+      "title": "Folder",
+      "description": "A folder document.",
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The folder name"
+        },
+        "ownerId": {
+          "type": "string",
+          "description": "The user ID of the folder owner"
+        }
+      },
+      "required": ["name", "ownerId"]
+    }
+  },
+  "firestore": {
+    "/notes/{noteId}": {
+      "schema": {
+        "$ref": "#/entities/Note"
+      },
+      "description": "Stores user notes."
+    },
+    "/folders/{folderId}": {
+      "schema": {
+        "$ref": "#/entities/Folder"
+      },
+      "description": "Stores user folders."
+    }
+  }
+}
